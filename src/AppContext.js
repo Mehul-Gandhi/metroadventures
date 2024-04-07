@@ -14,7 +14,7 @@ export function AppProvider({ children }) {
             { name: 'Snacks', icon: 'cutlery' },
             { name: 'Instagrammable', icon: 'instagram' },
           ],
-          address: 'Columbus Corridor 1234 xyz street',
+          address: '3251 20th Ave, San Francisco, CA 94132',
           name: 'Columbus Corridor',
           image: "./ggfcf_rossalley.jpg", // assuming this is imported at the top
           rating: "3.8",

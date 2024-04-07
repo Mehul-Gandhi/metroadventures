@@ -88,3 +88,10 @@
   width: 60%; /* Full width on mobile */
   height: auto; /* Maintain aspect ratio */
 }
+
+@media (max-width: 600px) {
+  .map-container {
+      height: 50vh; /* Smaller height for mobile devices */
+      padding: 5vh 0; /* Less padding to fit the screen */
+  }
+}

@@ -15,7 +15,7 @@ export default function LandingPage() {
     return (
     <div>
       <header className="header">
-        <h1>Tab1</h1>
+        <h1>Scavenger Hunt Trip! </h1>
       </header>
       <div className="card-container">
         {routesData.map((trip) => (
