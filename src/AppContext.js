@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { createSampleRoute, wanderWestPortal, richmondZigZag } from './trips';
+import { createSampleRoute, wanderWestPortal, richmondZigZag } from './trips.js';
 
 const AppContext = createContext();
 
