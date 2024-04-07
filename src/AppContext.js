@@ -6,7 +6,7 @@ export function AppProvider({ children }) {
 
     var data = [
         {
-          filePath: "ggfcf_rossalley.jpg",
+          filePath: "./ggfcf_rossalley.jpg",
           description: 'Explore the historic Columbus Corridor and its vibrant culture.',
           timeToComplete: '2 hours',
           tags: [
@@ -28,7 +28,7 @@ export function AppProvider({ children }) {
           tags: [
             { name: 'Culture', icon: 'book' },
             { name: 'Food', icon: 'utensils' },
-            { name: 'Historic', icon: 'landmark' },
+            { name: 'Historic', icon: 'museum' },
           ],
           address: 'Chinatown 5678 abc street',
           name: 'Chinatown',
@@ -59,7 +59,7 @@ export function AppProvider({ children }) {
           timeToComplete: '2.5 hours',
           tags: [
             { name: 'Scenic Views', icon: 'image' },
-            { name: 'Historic', icon: 'landmark' },
+            { name: 'Historic', icon: 'museum' },
             { name: 'Outdoor', icon: 'tree' },
           ],
           address: 'Golden Gate Bridge 1112 ghi road',
