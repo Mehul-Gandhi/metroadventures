@@ -45,6 +45,7 @@ const Tour = () => {
     const [revealLocation, setRevealLocation] = useState(false);
     const [attractionNum, setAttractionNum] = useState(0);
     const [clues, setClues] = useState(trip.pois[attractionNum].clues.map(clue => clue.text)); // Initialize clues
+    const [gameCompleted, setGameCompleted] = useState(false);
     const totalClues = 3;  // Assuming there are 3 clues
     const totalAttractions = trip.pois.length;
 
@@ -68,7 +69,10 @@ const Tour = () => {
     const nextLocation = () => {
         if (attractionNum < totalAttractions - 1 && revealLocation) {
             setAttractionNum(attractionNum + 1);
-        } 
+        } else if (attractionNum === totalAttractions - 1 && revealLocation) {
+            // Set game as completed when the last location is reached and the location is revealed
+            setGameCompleted(true);
+        }
 }
 
     const { isLoaded, loadError } = useLoadScript({
@@ -107,15 +111,15 @@ const Tour = () => {
         setRevealLocation(false);
         console.log(clues);
 
-        const location = {
-            lat: trip.pois[attractionNum].location.latitude,
-            lng: trip.pois[attractionNum].location.longitude
-        };
-        setMapCenter(location);
-        setScavengerHuntArea({
-            center: location,
-            radius: 250,
-        });
+        // const location = {
+        //     lat: trip.pois[attractionNum].location.latitude,
+        //     lng: trip.pois[attractionNum].location.longitude
+        // };
+        // setMapCenter(location);
+        // setScavengerHuntArea({
+        //     center: location,
+        //     radius: 2500,
+        // });
     }, [attractionNum, trip.pois]);
 
 
@@ -142,6 +146,16 @@ const Tour = () => {
 }
     if (isLoaded) {
 
+        const location = {
+            lat: trip.pois[attractionNum].location.latitude,
+            lng: trip.pois[attractionNum].location.longitude
+        };
+        console.log(location);
+        setMapCenter(location);
+        setScavengerHuntArea({
+            center: location,
+            radius: 250,
+        });
     updateLocation();
     const locationInterval = setInterval(updateLocation, 10); 
     return () => {
@@ -264,6 +278,39 @@ onClick={() => setShowCluesPopup(true)}
         >
             Next Location
         </Button>
+        {gameCompleted && (
+    <Dialog open={gameCompleted}>
+        <DialogTitle>
+            Congratulations!
+            <IconButton
+                aria-label="close"
+                onClick={() => setGameCompleted(false)}
+                sx={{
+                    position: 'absolute',
+                    right: 8,
+                    top: 8,
+                    color: (theme) => theme.palette.grey[500],
+                }}
+            >
+                <CloseIcon />
+            </IconButton>
+        </DialogTitle>
+        <DialogContent>
+            <Typography variant="h6">
+                You've completed the tour!
+            </Typography>
+            <Typography>
+                Great job exploring all the locations. We hope you enjoyed the journey.
+            </Typography>
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={() => {
+                setGameCompleted(false);
+                navigate('/');
+            }}>Return to Home</Button>
+        </DialogActions>
+    </Dialog>
+)}
     </div>
         {userLocation && (
                     <Circle
