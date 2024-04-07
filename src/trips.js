@@ -74,7 +74,7 @@ var Rating = /** @class */ (function () {
 }());
 exports.Rating = Rating;
 var Route = /** @class */ (function () {
-    function Route(name, estimated_time, transportation_method, description, rating, pois, address, tags, filePath, id) {
+    function Route(name, estimated_time, transportation_method, description, rating, pois, address, tags, filePath, id, miles) {
         this.name = name;
         this.estimated_time = estimated_time;
         this.transportation_method = transportation_method;
@@ -85,6 +85,7 @@ var Route = /** @class */ (function () {
         this.tags = tags;
         this.filePath = filePath;
         this.id = id;
+        this.miles = miles; 
     }
     Route.prototype.toJSON = function () {
         return JSON.stringify({
@@ -98,7 +99,8 @@ var Route = /** @class */ (function () {
             address: this.address,
             tags: this.tags,
             filePath: this.filePath,
-            id: this.id
+            id: this.id,
+            miles: this.miles
         });
     };
     return Route;
@@ -144,7 +146,8 @@ function createSampleRoute() {
         { name: 'Instagrammable', icon: 'instagram' },
     ]
     var filePath = "./ggfcf_rossalley.jpg";
-    return new Route("Columbus Corridor", 1.5, "Walking", route_description, routeRating, [poi1, poi2, poi3, poi4, poi5], route_starting_address, tags, filePath, 0);
+    var miles = "2 miles"
+    return new Route("Columbus Corridor", 1.5, "Walking", route_description, routeRating, [poi1, poi2, poi3, poi4, poi5], route_starting_address, tags, filePath, 0, miles);
 }
 exports.createSampleRoute = createSampleRoute;
 function wanderWestPortal() {

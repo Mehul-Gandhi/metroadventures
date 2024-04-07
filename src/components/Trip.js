@@ -4,7 +4,7 @@ import AppContext from '../AppContext'; // Adjust the path as needed
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import StarIcon from '@mui/icons-material/Star';
-import { Grid, Typography, Box, Divider, Button  } from '@mui/material';
+import { Grid, Typography, Box, Divider, Button, IconButton } from '@mui/material';
 import SubwayIcon from '@mui/icons-material/Subway';
 import FastfoodIcon from '@mui/icons-material/Fastfood'; // Assuming this for 'Snacks'
 import InstagramIcon from '@mui/icons-material/Instagram'; 
@@ -16,12 +16,14 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import LocalMoviesIcon from '@mui/icons-material/LocalMovies'; // Assuming this for 'Entertainment' as 'film'
 import ImageIcon from '@mui/icons-material/Image';
 import NatureIcon from '@mui/icons-material/Nature'; // Assuming this for 'Outdoor' as 'tree'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function Trip () {
     let { tripId } = useParams();
     const navigate = useNavigate();
     const { routesData } = useContext(AppContext);
-    const trip = routesData[parseInt(tripId) - 1];
+    const trip = routesData[parseInt(tripId)];
+    console.log(trip);
     const iconDictionary = {
         subway: <SubwayIcon />,
         cutlery: <FastfoodIcon />, // Example substitution for 'Snacks'
@@ -47,6 +49,11 @@ export default function Trip () {
 
     return (       
     <Box display="flex" flexDirection="column" alignItems="center">
+        <Box display="flex" width="100%" justifyContent="flex-start">
+                <IconButton onClick={() => navigate('/')} style={{ margin: '10px' }}>
+                    <ArrowBackIcon />
+                </IconButton>
+            </Box>
         <div className="card2">
         <img src={"/" + trip.filePath} alt={trip.name} style={{ maxWidth: '100%', height: 'auto' }} />
         <div className="card-content">
@@ -56,7 +63,7 @@ export default function Trip () {
     <Grid container justifyContent="center" spacing={2}>
         <Grid item xs={4} display="flex" flexDirection="column" alignItems="center">
             <AccessTimeIcon />
-            <Typography>{trip.timeToComplete}</Typography>
+            <Typography>{trip.estimated_time} hours</Typography>
         </Grid>
         <Grid item xs={4} display="flex" flexDirection="column" alignItems="center">
             <DirectionsWalkIcon />
@@ -64,9 +71,10 @@ export default function Trip () {
         </Grid>
         <Grid item xs={4} display="flex" flexDirection="column" alignItems="center">
             <StarIcon sx={{ color: 'yellow' }} />
-            <Typography>{trip.rating} / 5</Typography>
+            <Typography>{trip.rating.score} / 5</Typography>
         </Grid>
     </Grid>
+
     <Grid container justifyContent="center" spacing={2} style={{ padding: '20px' }}>
         <Grid item xs={12}>
             <Typography variant="h6" component="span" style={{ fontWeight: 'bold' }}>
@@ -123,6 +131,7 @@ export default function Trip () {
                     textTransform: 'none', // Prevents uppercase transformation
                     padding: '15px 30px', // Increase padding to make the button larger
                     fontSize: '1.2rem',
+                    marginBottom: "15px"
                 }}
                 startIcon={<DirectionsWalkIcon />}
             >
