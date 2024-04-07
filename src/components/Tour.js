@@ -2,7 +2,16 @@ import { GoogleMap, useLoadScript, Marker, Circle } from '@react-google-maps/api
 import { useParams, useNavigate } from 'react-router-dom';
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import AppContext from '../AppContext'; // Adjust the path as needed
+import Button from '@mui/material/Button';
 import '../Tour.css'; // Import CSS file for styling
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import Typography from '@mui/material/Typography';
+
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -29,9 +38,30 @@ const Tour = () => {
     const [userLocation, setUserLocation] = useState(null);
     const [mapCenter, setMapCenter] = useState(center);
     const [scavengerHuntArea, setScavengerHuntArea] = useState(null);
-    const [showCluesPopup, setShowCluesPopup] = useState(false); // State to control popup visibility
-    const [clueStatus, setClueStatus] = useState([false, false, false, false]); // State to track the reveal status of clues
-    const [clueImage, setClueImage] = useState(null); // State to store clue 2 image
+    // const [clueImage, setClueImage] = useState(null); // State to store clue 2 image
+    const [showCluesPopup, setShowCluesPopup] = useState(false);
+    const [currentClueIndex, setCurrentClueIndex] = useState(0);
+    const [revealLocation, setRevealLocation] = useState(false);
+    const totalClues = 3;  // Assuming there are 3 clues
+
+    const clues = [
+        "This is clue one.",
+        "This is clue two.",
+        "This is clue three."
+    ];
+
+    const handleNextClue = () => {
+        if (currentClueIndex < totalClues - 1) {
+            setCurrentClueIndex(currentClueIndex + 1);
+            setRevealLocation(currentClueIndex === 2);
+        }
+    };
+
+    const handleRevealLocation = () => {
+        setCurrentClueIndex(totalClues - 1); // Set to the last clue
+        setRevealLocation(totalClues - 1 === 2);
+    };
+
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: `${process.env.REACT_APP_MAPS_KEY}`,
         libraries,
@@ -46,61 +76,6 @@ const Tour = () => {
         return stops;
     };
 
-    // Function to handle showing the clues popup
-    const handleCluesClick = () => {
-        setShowCluesPopup(true);
-    };
-
-    // Function to handle closing the clues popup
-    const handleClosePopup = () => {
-        setShowCluesPopup(false);
-    };
-
-    // Function to handle revealing the clue content
-    const handleRevealClue = (index) => {
-        if (index === 1) {
-            // Set clue 2 image path
-            setClueImage('/path/to/image.jpg');
-        }
-        setClueStatus(prevStatus => {
-            const newStatus = [...prevStatus];
-            newStatus[index] = true;
-            return newStatus;
-        });
-    };
-
-    // Function to handle revealing the location clue
-    const handleRevealLocation = () => {
-        setClueStatus(prevStatus => {
-            const newStatus = [...prevStatus];
-            newStatus[3] = true;
-            return newStatus;
-        });
-    };
-
-    // Function to render clue content
-    const renderClueContent = (clueText, index) => {
-        return (
-            <div key={index}>
-                <div>{index === 3 ? "Location" : `Clue ${index + 1}`}</div>
-                {clueStatus[index] && index !== 1 && <div>{clueText}</div>}
-                {clueStatus[index] && index === 1 && <img src={clueImage} alt="Clue 2" />}
-            </div>
-        );
-    };
-
-    // Function to render additional content based on clue reveal status
-    const renderAdditionalContent = () => {
-        return (
-            <div className="clues-list">
-                {renderClueContent("This is clue one.", 0)}
-                {renderClueContent("This is clue two.", 1)}
-                {renderClueContent("This is clue three.", 2)}
-                {renderClueContent("the location is san fran", 3)}
-            </div>
-        );
-    };
-
 
     const userIcon = isLoaded ? {
         path: window.google.maps.SymbolPath.CIRCLE,
@@ -110,6 +85,10 @@ const Tour = () => {
         strokeColor: '#4285F4',
         strokeWeight: 2,
     } : null;
+
+    const handleQuitRoute = () => {
+        navigate('/'); // Navigate to the home page
+    };
 
 
   useEffect(() => {
@@ -185,25 +164,88 @@ const Tour = () => {
       // Use a built-in symbol as an icon
       icon={userIcon}
   />}
-   <div className="button-container">
-                <button className="blue-button">Quit Route</button>
-                <button className="blue-button" onClick={handleCluesClick}>Clues</button>
-                <button className="grey-button" disabled>Greyed Out</button>
-            </div>
+<div className="button-container">
+        <Button 
+            variant="outlined" 
+            size= "large"
+            onClick={handleQuitRoute}
+            style={{ 
+                color: '#29b6f6', 
+                borderColor: '#29b6f6', 
+                margin: '5px',
+                textTransform: 'none',
+                backgroundColor: 'white'
+            }}
+        >
+            Quit Route
+        </Button>
 
-            {showCluesPopup && (
-                <div className="popup">
-                    <div className="popup-header">Clues</div>
-                    {renderAdditionalContent()}
-                    <div className="popup-buttons">
-                        <button onClick={handleClosePopup}>Close</button>
-                        {clueStatus.map((status, index) => (
-                            !status && index !== 3 && <button key={index} onClick={() => handleRevealClue(index)}>Reveal Clue {index + 1}</button>
-                        ))}
-                        {!clueStatus[3] && <button onClick={handleRevealLocation}>Reveal Location</button>}
-                    </div>
-                </div>
-            )}
+<Button 
+variant="outlined" 
+size= "large"
+style={{ 
+    color: '#29b6f6', 
+    borderColor: '#29b6f6', 
+    margin: '5px',
+    textTransform: 'none',
+    backgroundColor: 'white'
+}}
+onClick={() => setShowCluesPopup(true)}
+
+>Show Clues</Button>
+
+<Dialog open={showCluesPopup} onClose={() => setShowCluesPopup(false)}>
+    <DialogTitle>
+        Clues
+        <IconButton
+            aria-label="close"
+            onClick={() => setShowCluesPopup(false)}
+            sx={{
+                position: 'absolute',
+                right: 8,
+                top: 8,
+                color: (theme) => theme.palette.grey[500],
+            }}
+        >
+            <CloseIcon />
+        </IconButton>
+    </DialogTitle>
+    <DialogContent>
+        {clues.slice(0, currentClueIndex + 1).map((clue, index) => (
+            <Typography key={index} variant="body1" gutterBottom>
+            {clue}
+        </Typography>
+        ))}
+        {revealLocation && (
+        <Typography variant="body1" gutterBottom>
+            <b>Location:</b> {trip.address}
+        </Typography>
+    )}
+    </DialogContent>
+    <DialogActions>
+        {currentClueIndex < totalClues - 1 && (
+            <Button onClick={handleNextClue}>Next Clue</Button>
+        )}
+        <Button onClick={handleRevealLocation}>Reveal Location</Button>
+    </DialogActions>
+</Dialog>
+
+
+        <Button 
+            variant="outlined" 
+            size= "large"
+            disabled 
+            style={{ 
+                color: '#ccc', 
+                borderColor: '#ccc', 
+                margin: '5px',
+                textTransform: 'none',
+                backgroundColor: 'white'
+            }}
+        >
+            Greyed Out
+        </Button>
+    </div>
         {userLocation && (
                     <Circle
                         center={userLocation}
