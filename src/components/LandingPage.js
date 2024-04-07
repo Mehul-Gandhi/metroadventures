@@ -40,7 +40,7 @@ export default function LandingPage() {
                         onMouseEnter={(e) => e.target.style.color = '#1e88e5'}
                         onMouseLeave={(e) => e.target.style.color = '#29b6f6'}
                     >
-                        About Us
+                        Info
                     </Button>
                     <Button 
                         startIcon={<CouponIcon />}
