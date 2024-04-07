@@ -32,7 +32,7 @@ export default function LandingPage() {
     <div>
       <header className="header">
         <h1>Scavenger Hunt Trip! </h1>
-        <div style={{ position: 'absolute', right: 10, top: 10 }}>
+        <div style={{ position: 'absolute', right: 10, top: 10, margin: "10px" }}>
                       <Button 
                         startIcon={<InfoIcon />}
                         onClick={handleAboutUs}

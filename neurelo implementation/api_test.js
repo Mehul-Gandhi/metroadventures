@@ -7,7 +7,7 @@ var options = {
     'path': '/rest/poi/__one?select=%7B%22id%22:%20true%7D',
     'headers': {
         'Content-Type': 'application/json',
-        'X-API-KEY': 'neurelo_9wKFBp874Z5xFw6ZCfvhXd/w9y5gCGya0vcRosG0+ZfNzmDp39N2GbkikCb6aDXtKC0wzoq+giwupk1xbS+HnbWh5pT61gJdKXfSlu3/A1oBS9Tr1VhtEb91of9u3RQ4rEcnc8RbWwee5irb6AUXV/by6NJ50ecXv4e1SuD3flLHZLXSSGWGU7k9L8e7y0wG_rmTVCKyIo/JfefNQ2KMv8hBzZJb1kHQd1bXw0E+ebtQ='
+        'X-API-KEY': ''
     },
     'maxRedirects': 20
 };
