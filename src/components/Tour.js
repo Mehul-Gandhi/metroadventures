@@ -44,43 +44,31 @@ const Tour = () => {
     const [currentClueIndex, setCurrentClueIndex] = useState(0);
     const [revealLocation, setRevealLocation] = useState(false);
     const [attractionNum, setAttractionNum] = useState(0);
+    const [clues, setClues] = useState(trip.pois[attractionNum].clues.map(clue => clue.text)); // Initialize clues
     const totalClues = 3;  // Assuming there are 3 clues
     const totalAttractions = trip.pois.length;
 
-    var clues = trip.pois[0].clues.map(clue => clue.text);
-    console.log(clues);
+    // console.log(clues);
     
 
     const handleNextClue = () => {
         if (currentClueIndex < totalClues - 1) {
             setCurrentClueIndex(currentClueIndex + 1);
-            setRevealLocation(currentClueIndex === 2);
+            setRevealLocation(currentClueIndex === totalClues - 1);
+            console.log(revealLocation);
         }
     };
 
     const handleRevealLocation = () => {
-        setCurrentClueIndex(totalClues - 1); // Set to the last clue
-        setRevealLocation(totalClues - 1 === 2);
-
-        
+        setCurrentClueIndex(totalClues); // Set to the last clue
+        setRevealLocation(totalClues === 3);
+        console.log(revealLocation);
     };
 
     const nextLocation = () => {
-        setAttractionNum(attractionNum + 1);
-        if (attractionNum < totalAttractions) {
-            clues = trip.pois[attractionNum].clues.map(clue => clue.text);
-            var latitude = trip.pois[attractionNum].location.latitude;
-            var longitude = trip.pois[attractionNum].location.longitude;
-            var location = { lat: latitude, lng: longitude };
-            // console.log(location);
-            setMapCenter(location);
-            // Assuming a block is approximately 100 meters, set the radius for 0.1 blocks (10 meters)
-            setScavengerHuntArea({
-                center: location,
-                radius: 250,
-            });
-            setCurrentClueIndex(0);
-    }
+        if (attractionNum < totalAttractions - 1) {
+            setAttractionNum(attractionNum + 1);
+        }
 }
 
     const { isLoaded, loadError } = useLoadScript({
@@ -112,6 +100,25 @@ const Tour = () => {
     };
 
 
+    useEffect(() => {
+        // Update the clues when the attractionNum changes
+        setClues(trip.pois[attractionNum].clues.map(clue => clue.text));
+        setCurrentClueIndex(0);
+        setRevealLocation(false);
+        console.log(clues);
+
+        const location = {
+            lat: trip.pois[attractionNum].location.latitude,
+            lng: trip.pois[attractionNum].location.longitude
+        };
+        setMapCenter(location);
+        setScavengerHuntArea({
+            center: location,
+            radius: 250,
+        });
+    }, [attractionNum, trip.pois]);
+
+
   useEffect(() => {
 
     const updateLocation = () =>
@@ -136,16 +143,16 @@ const Tour = () => {
     if (isLoaded) {
    
  
-        var latitude = trip.pois[0].location.latitude;
-        var longitude = trip.pois[0].location.longitude;
-        var location = { lat: latitude, lng: longitude };
-        // console.log(location);
-        setMapCenter(location);
-        // Assuming a block is approximately 100 meters, set the radius for 0.1 blocks (10 meters)
-        setScavengerHuntArea({
-            center: location,
-            radius: 250,
-        });
+        // var latitude = trip.pois[0].location.latitude;
+        // var longitude = trip.pois[0].location.longitude;
+        // var location = { lat: latitude, lng: longitude };
+        // // console.log(location);
+        // setMapCenter(location);
+        // // Assuming a block is approximately 100 meters, set the radius for 0.1 blocks (10 meters)
+        // setScavengerHuntArea({
+        //     center: location,
+        //     radius: 250,
+        // });
 
     updateLocation();
     const locationInterval = setInterval(updateLocation, 10); 
@@ -258,16 +265,16 @@ onClick={() => setShowCluesPopup(true)}
         <Button 
             variant="outlined" 
             size= "large"
-            disabled 
+            onClick={nextLocation}
             style={{ 
-                color: '#ccc', 
-                borderColor: '#ccc', 
+                color: '#29b6f6', 
+                borderColor: '#29b6f6', 
                 margin: '5px',
                 textTransform: 'none',
                 backgroundColor: 'white'
             }}
         >
-            Greyed Out
+            Next Location
         </Button>
     </div>
         {userLocation && (
