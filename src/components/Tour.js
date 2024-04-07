@@ -15,7 +15,9 @@ import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import LinearScaleIcon from '@mui/icons-material/LinearScale';
 import PlaceIcon from '@mui/icons-material/Place';
-
+import FingerprintIcon from '@mui/icons-material/Fingerprint';
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import DescriptionIcon from '@mui/icons-material/Description';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -245,20 +247,26 @@ onClick={() => setShowCluesPopup(true)}
         </IconButton>
     </DialogTitle>
     <DialogContent>
-        {clues.slice(0, currentClueIndex + 1).map((clue, index) => (
-            <div>
-            <div>Clue {index + 1}:</div>
-            <Typography key={index} variant="body1" gutterBottom>
-             {clue}
-        </Typography>
+    {clues.slice(0, currentClueIndex + 1).map((clue, index) => (
+        <div key={index}> {/* Ensure that key is at the top level of map */}
+            <Typography variant="body1" component="div" gutterBottom style={{ fontWeight: 'bold' }}>
+            <FingerprintIcon /> Clue {index + 1}:
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+            {clue}
+            </Typography>
         </div>
         ))}
         {revealLocation && (<div>
         <Typography variant="body1" gutterBottom>
-            <b>Location:</b> {trip.address}
+            <StorefrontIcon/> <b>Name:</b> {trip.pois[attractionNum].name}
         </Typography>
         <Typography variant="body1" gutterBottom>
-            <b>Description: </b> {trip.description}
+            <PlaceIcon /> <b>Location:</b> (Latitude: {trip.pois[attractionNum].location.latitude}, 
+            Longitude:  {trip.pois[attractionNum].location.longitude})
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+            <DescriptionIcon /> <b>Description: </b> {trip.pois[attractionNum].description}
         </Typography>
         </div>
     )}
