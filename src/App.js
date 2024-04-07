@@ -20,7 +20,8 @@ export default function App() {
           <Route path="/past" element={<PreviousTrips />} />
           <Route path="/trip/:tripId" element={<Trip />} />
           <Route path="/tour/:tripId" element={<Tour />} />
-
+          <Route path="/prevTrips" element={<PreviousTrips />}/>
+          <Route path="/coupons" element={<Coupons />} />
         </Routes>
       </div>
     </BrowserRouter>
