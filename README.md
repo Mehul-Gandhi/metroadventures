@@ -1,3 +1,20 @@
+# Project Information 
+
+[MetroVentures Mission](https://www.canva.com/design/DAGBr6KSpSo/yqPQ7Wl2mxC4Xrb3cJDCKA/view?utm_content=DAGBr6KSpSo&utm_campaign=designshare&utm_medium=link&utm_source=editor)
+
+## Inspiration
+We wanted to address two struggles facing American cities today. First, loneliness has been increasing to epidemic levels, especially in large cities like San Francisco. People are struggling to connect with one another, and we wanted to provide a new avenue for finding real-world social interaction. Second, small businesses have been struggling recently, especially as foot traffic has fallen following the end of the pandemic. We wanted to draw people into relationships with local businesses so that consumers can dive into the treasure trove of culture and commerce all across the city. 
+
+## Function
+MetroVentures is a real-world game designed to foster connections between city dwellers and small businesses. Our aim is to invite people into spaces where they feel comfortable exploring into and reaching out towards their community. 
+ 
+MetroVentures begins on a landing screen, where users are prompted with tours passing through a neighborhood of their hometown. They choose one, and the hunt begins. 
+
+MetroVentures is played by locating small businesses, landmarks, and other points of interest along a path. Users are given direction, distance, and – most importantly – clues to help them navigate, as well as a map with a radius to look within. 
+
+Users can use as many or as few clues as they like. If they come within 25 meters of the location, they have solved the puzzle. They are then prompted with an activity, often involving an interaction with local staff or business owners. Thus, users are incentivized to connect with neighbors they might otherwise have walked right past. 
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -68,3 +85,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
