@@ -316,7 +316,7 @@ onClick={() => setShowCluesPopup(true)}
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
             <AccessTimeIcon color="primary" />
             <Typography variant="body1" style={{ marginLeft: '8px' }}>
-            {trip.estimated_time}
+            {trip.estimated_time} hours
             </Typography>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
