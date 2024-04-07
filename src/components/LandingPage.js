@@ -30,9 +30,7 @@ export default function LandingPage() {
 
     return (
     <div>
-      <header className="header">
-        <h1>Scavenger Hunt Trip! </h1>
-        <div style={{ position: 'absolute', right: 10, top: 10, margin: "10px" }}>
+       <div style={{ position: 'absolute', right: 10, top: 10, margin: "10px" }}>
                       <Button 
                         startIcon={<InfoIcon />}
                         onClick={handleAboutUs}
@@ -61,6 +59,9 @@ export default function LandingPage() {
                       Past Trips
                     </Button>
                 </div>
+      <header className="header">
+        <h1>Scavenger Hunt Trip! </h1>
+       
       </header>
       <div className="card-container">
         {routesData.map((trip) => (
