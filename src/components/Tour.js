@@ -18,6 +18,7 @@ import PlaceIcon from '@mui/icons-material/Place';
 import FingerprintIcon from '@mui/icons-material/Fingerprint';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import DescriptionIcon from '@mui/icons-material/Description';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -315,6 +316,12 @@ onClick={() => setShowCluesPopup(true)}
         <Typography variant="h6" gutterBottom>
             You Completed the Route! 🎉🎉🎉
         </Typography>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+            <MonetizationOnIcon style={{ color: '#8B8000' }}  />
+            <Typography variant="body1" style={{ marginLeft: '8px' }}>
+                You earned 10 coins! Use these for coupons
+            </Typography>
+        </div>
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
             <DirectionsWalkIcon color="primary" />
             <Typography variant="body1" style={{ marginLeft: '8px' }}>
