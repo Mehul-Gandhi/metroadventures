@@ -1,7 +1,14 @@
 import React, { useState } from "react";
-import { Button, Card, CardContent, CardMedia, Typography, IconButton } from '@mui/material';
+import { Button, 
+    Card, CardContent,
+    CardMedia,
+    Typography,
+    IconButton,
+    Dialog,
+    DialogContent, Box } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
+import CloseIcon from '@mui/icons-material/Close';
 
 const couponsData = [
     {
@@ -83,18 +90,48 @@ export default function Coupons () {
             </div>
 
             {selectedCoupon && (
-                <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'white', zIndex: 100 }}>
-                    <h2>{selectedCoupon.restaurant}</h2>
-                    <p>Address: {selectedCoupon.address}</p>
-                    <p>Menu Item: {selectedCoupon.menuItem}</p>
-                    <Button variant="contained" href={selectedCoupon.mapsLink} target="_blank">
-                        Open in Google Maps
-                    </Button>
-                    <Button variant="contained" onClick={handleClose} style={{ marginLeft: '10px' }}>
-                        Close
-                    </Button>
-                </div>
-            )}
-        </div>
-    );
+        <Dialog
+          fullScreen
+          open={Boolean(selectedCoupon)}
+          onClose={handleClose}
+        >
+          <DialogContent>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={handleClose}
+              aria-label="close"
+              style={{ position: 'absolute', right: 10, top: 10 }}
+            >
+              <CloseIcon />
+            </IconButton>
+            <Card>
+              <CardMedia
+                component="img"
+                image={selectedCoupon.filePath}
+                alt={selectedCoupon.restaurant}
+                style={{ height: 'auto', width: '100%' }}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {selectedCoupon.restaurant}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {selectedCoupon.menuItem}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Address: {selectedCoupon.address}
+                </Typography>
+                <Box mt={2}>
+                  <Button variant="contained" href={selectedCoupon.mapsLink} target="_blank">
+                    Open in Google Maps
+                  </Button>
+                </Box>
+              </CardContent>
+            </Card>
+          </DialogContent>
+        </Dialog>
+      )}
+    </div>
+  );
 }
