@@ -11,7 +11,10 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
-import { FormatBold } from '@mui/icons-material';
+import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import LinearScaleIcon from '@mui/icons-material/LinearScale';
+import PlaceIcon from '@mui/icons-material/Place';
 
 
 const libraries = ['places'];
@@ -284,35 +287,60 @@ onClick={() => setShowCluesPopup(true)}
             Next Location
         </Button>
         {gameCompleted && (
-    <Dialog open={gameCompleted}>
-        <DialogTitle>
-            Congratulations!
-            <IconButton
-                aria-label="close"
-                onClick={() => setGameCompleted(false)}
-                sx={{
-                    position: 'absolute',
-                    right: 8,
-                    top: 8,
-                    color: (theme) => theme.palette.grey[500],
-                }}
-            >
-                <CloseIcon />
-            </IconButton>
-        </DialogTitle>
-        <DialogContent>
-            <Typography variant="h6">
-                You've completed the tour!
+  <Dialog open={gameCompleted} onClose={() => setGameCompleted(false)}>
+    <DialogTitle>
+      Congratulations!
+      <IconButton
+        aria-label="close"
+        onClick={() => setGameCompleted(false)}
+        sx={{
+          position: 'absolute',
+          right: 8,
+          top: 8,
+          color: (theme) => theme.palette.grey[500],
+        }}
+      >
+        <CloseIcon />
+      </IconButton>
+    </DialogTitle>
+    <DialogContent>
+        <Typography variant="h6" gutterBottom>
+            You Completed the Route! 🎉🎉🎉
+        </Typography>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+            <DirectionsWalkIcon color="primary" />
+            <Typography variant="body1" style={{ marginLeft: '8px' }}>
+            {trip.miles} miles walked
             </Typography>
-            <Typography>
-                Great job exploring all the locations. We hope you enjoyed the journey.
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+            <AccessTimeIcon color="primary" />
+            <Typography variant="body1" style={{ marginLeft: '8px' }}>
+            {trip.estimated_time}
             </Typography>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+            <LinearScaleIcon color="primary" />
+            <Typography variant="body1" style={{ marginLeft: '8px' }}>
+            2500 steps taken
+            </Typography>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+            <PlaceIcon color="primary" />
+            <Typography variant="body1" style={{ marginLeft: '8px' }}>
+            {trip.tags.map((tag, index) => (
+                <span key={index}>
+                {tag.name}{index < trip.tags.length - 1 ? ', ' : ''}
+                </span>
+            ))}
+            </Typography>
+        </div>
         </DialogContent>
         <DialogActions>
-            <Button onClick={() => {
-                setGameCompleted(false);
-                navigate('/');
-            }}>Return to Home</Button>
+        <Button onClick={() => {
+            setGameCompleted(false);
+            navigate('/');
+        }}>Close</Button>
         </DialogActions>
     </Dialog>
 )}
