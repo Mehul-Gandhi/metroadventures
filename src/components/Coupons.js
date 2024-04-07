@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Button, Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Button, Card, CardContent, CardMedia, Typography, IconButton } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
 
 const couponsData = [
     {
@@ -30,6 +32,7 @@ const couponsData = [
 
 export default function Coupons () {
     const [selectedCoupon, setSelectedCoupon] = useState(null);
+    const navigate = useNavigate();
 
     const handleCouponClick = (coupon) => {
         setSelectedCoupon(coupon);
@@ -41,7 +44,13 @@ export default function Coupons () {
 
     return (
         <div>
-            <h1>Coupons</h1>
+             <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px' }}>
+                <IconButton onClick={() => navigate('/')} style={{ marginRight: '10px' }}>
+                    <ArrowBackIcon />
+                </IconButton>
+                <h1 style={{ flexGrow: 1, textAlign: 'center', margin: 0 }}>Coupons</h1>
+                <div style={{ width: 48 }}></div>  {/* Placeholder for balancing the layout */}
+            </header>
             <div style={{  maxHeight: '400px' }}>
                 {couponsData.map(coupon => (
                     <Card key={coupon.id} onClick={() => handleCouponClick(coupon)} style={{ margin: '10px', cursor: 'pointer' }}>
