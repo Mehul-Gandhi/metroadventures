@@ -38,7 +38,7 @@ export default function Trip () {
     };
 
     const handleStartTour = () => {
-        navigate(`/Tour/${trip.id}`); // Assuming `trip.id` is the correct identifier
+        navigate(`/tour/${trip.id}`); // Assuming `trip.id` is the correct identifier
     };
 
     const renderIcon = (iconName) => {

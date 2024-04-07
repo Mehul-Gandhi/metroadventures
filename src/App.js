@@ -6,6 +6,7 @@ import PreviousTrips from './components/PreviousTrips'; // Adjust the path as ne
 import { AppProvider } from './AppContext';
 import './App.css';
 import Trip from './components/Trip';
+import Tour from './components/Tour';
 
 export default function App() {
   return (
@@ -18,6 +19,8 @@ export default function App() {
           <Route path="/coupons" element={<Coupons />} />
           <Route path="/past" element={<PreviousTrips />} />
           <Route path="/trip/:tripId" element={<Trip />} />
+          <Route path="/tour/:tripId" element={<Tour />} />
+
         </Routes>
       </div>
     </BrowserRouter>
