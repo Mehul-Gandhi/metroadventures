@@ -1,5 +1,7 @@
-import React from 'react';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
+import { useParams, useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react';
+import AppContext from '../AppContext'; // Adjust the path as needed
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -12,6 +14,11 @@ const center = {
 };
 
 const Tour = () => {
+    let { tripId } = useParams();
+    const navigate = useNavigate();
+    const { routesData } = useContext(AppContext);
+    const trip = routesData[parseInt(tripId) - 1];
+    console.log(trip);
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: '',
     libraries,
