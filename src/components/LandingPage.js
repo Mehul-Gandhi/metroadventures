@@ -59,7 +59,7 @@ export default function LandingPage() {
                       Past Trips
                     </Button>
                 </div>
-      <header className="header">
+      <header className="header" style={{margin: "10px"}}>
         <h1>Scavenger Hunt Trip! </h1>
        
       </header>
