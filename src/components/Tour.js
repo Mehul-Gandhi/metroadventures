@@ -25,7 +25,6 @@ const Tour = () => {
     const navigate = useNavigate();
     const { routesData } = useContext(AppContext);
     const trip = routesData[parseInt(tripId) - 1];
-    console.log(trip);
     const [center, setCenter] = useState({ lat: -34.397, lng: 150.644 });
     const [userLocation, setUserLocation] = useState(null);
     const [mapCenter, setMapCenter] = useState(center);
@@ -33,9 +32,8 @@ const Tour = () => {
     const [showCluesPopup, setShowCluesPopup] = useState(false); // State to control popup visibility
     const [clueStatus, setClueStatus] = useState([false, false, false, false]); // State to track the reveal status of clues
     const [clueImage, setClueImage] = useState(null); // State to store clue 2 image
-
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: '',
+        googleMapsApiKey: `${process.env.REACT_APP_MAPS_KEY}`,
         libraries,
     });
 
@@ -124,7 +122,7 @@ const Tour = () => {
                 const currentUserLocation = { lat: latitude, lng: longitude };
                 setUserLocation(currentUserLocation);
                 setCenter(currentUserLocation);
-                console.log(currentUserLocation);
+                // console.log(currentUserLocation);
             },
             (error) => {
                 console.error('Error getting current location:', error);
