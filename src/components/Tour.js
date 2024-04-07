@@ -11,6 +11,7 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import { FormatBold } from '@mui/icons-material';
 
 
 const libraries = ['places'];
@@ -46,11 +47,9 @@ const Tour = () => {
     const totalClues = 3;  // Assuming there are 3 clues
     const totalAttractions = trip.pois.length;
 
-    const clues = [
-        "This is clue one.",
-        "This is clue two.",
-        "This is clue three."
-    ];
+    var clues = trip.pois[0].clues.map(clue => clue.text);
+    console.log(clues);
+    
 
     const handleNextClue = () => {
         if (currentClueIndex < totalClues - 1) {
@@ -62,7 +61,27 @@ const Tour = () => {
     const handleRevealLocation = () => {
         setCurrentClueIndex(totalClues - 1); // Set to the last clue
         setRevealLocation(totalClues - 1 === 2);
+
+        
     };
+
+    const nextLocation = () => {
+        setAttractionNum(attractionNum + 1);
+        if (attractionNum < totalAttractions) {
+            clues = trip.pois[attractionNum].clues.map(clue => clue.text);
+            var latitude = trip.pois[attractionNum].location.latitude;
+            var longitude = trip.pois[attractionNum].location.longitude;
+            var location = { lat: latitude, lng: longitude };
+            // console.log(location);
+            setMapCenter(location);
+            // Assuming a block is approximately 100 meters, set the radius for 0.1 blocks (10 meters)
+            setScavengerHuntArea({
+                center: location,
+                radius: 250,
+            });
+            setCurrentClueIndex(0);
+    }
+}
 
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: `${process.env.REACT_APP_MAPS_KEY}`,
@@ -117,20 +136,17 @@ const Tour = () => {
     if (isLoaded) {
    
  
-    const geocoder = new window.google.maps.Geocoder();
-    geocoder.geocode({ address: trip.address }, (results, status) => {
-        if (status === 'OK') {
-            const location = results[0].geometry.location;
-            setMapCenter(location);
-            // Assuming a block is approximately 100 meters, set the radius for 0.1 blocks (10 meters)
-            setScavengerHuntArea({
-                center: location,
-                radius: 250,
-            });
-        } else {
-            console.error('Geocode was not successful for the following reason: ' + status);
-        }
-    });
+        var latitude = trip.pois[0].location.latitude;
+        var longitude = trip.pois[0].location.longitude;
+        var location = { lat: latitude, lng: longitude };
+        // console.log(location);
+        setMapCenter(location);
+        // Assuming a block is approximately 100 meters, set the radius for 0.1 blocks (10 meters)
+        setScavengerHuntArea({
+            center: location,
+            radius: 250,
+        });
+
     updateLocation();
     const locationInterval = setInterval(updateLocation, 10); 
     return () => {
@@ -146,7 +162,6 @@ const Tour = () => {
   if (!isLoaded) {
     return <div>Loading maps</div>;
   }
-  console.log(trip);
 
 
   return (
@@ -158,7 +173,7 @@ const Tour = () => {
         center={center}
         
       >
-        <div className="stop-circles-container" style={{position: 'relative'}}>{renderStops(4)}</div>
+        <div className="stop-circles-container" style={{position: 'relative'}}>{renderStops(totalAttractions)}</div>
         <Marker position={center} />
       {userLocation && 
       <Marker
@@ -214,14 +229,21 @@ onClick={() => setShowCluesPopup(true)}
     </DialogTitle>
     <DialogContent>
         {clues.slice(0, currentClueIndex + 1).map((clue, index) => (
+            <div>
+            <div>Clue {index + 1}:</div>
             <Typography key={index} variant="body1" gutterBottom>
-            {clue}
+             {clue}
         </Typography>
+        </div>
         ))}
-        {revealLocation && (
+        {revealLocation && (<div>
         <Typography variant="body1" gutterBottom>
             <b>Location:</b> {trip.address}
         </Typography>
+        <Typography variant="body1" gutterBottom>
+            <b>Description: </b> {trip.description}
+        </Typography>
+        </div>
     )}
     </DialogContent>
     <DialogActions>
