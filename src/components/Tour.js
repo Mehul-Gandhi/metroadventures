@@ -2,19 +2,17 @@ import { GoogleMap, useLoadScript, Marker, Circle } from '@react-google-maps/api
 import { useParams, useNavigate } from 'react-router-dom';
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import AppContext from '../AppContext'; // Adjust the path as needed
+import '../Tour.css'; // Import CSS file for styling
 
 const libraries = ['places'];
 const mapContainerStyle = {
     width: '100%',
-    height: '75vh', // 75% of the viewport height
+    height: '100vh', // 75% of the viewport height
   };
 
   const containerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    position: 'relative',  // Ensure the container is positioned relatively for accurate padding
     height: '100vh', // Container takes full height of the viewport
-    padding: '10vh 0' // Adds top and bottom padding to create gaps
 };
 
 const center = {
@@ -32,11 +30,79 @@ const Tour = () => {
     const [userLocation, setUserLocation] = useState(null);
     const [mapCenter, setMapCenter] = useState(center);
     const [scavengerHuntArea, setScavengerHuntArea] = useState(null);
+    const [showCluesPopup, setShowCluesPopup] = useState(false); // State to control popup visibility
+    const [clueStatus, setClueStatus] = useState([false, false, false, false]); // State to track the reveal status of clues
+    const [clueImage, setClueImage] = useState(null); // State to store clue 2 image
 
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: 'AIzaSyBjCRQ3tzekMYmR-TlKe_dT9zABPsxPFvA',
+        googleMapsApiKey: '',
         libraries,
     });
+
+     // Function to render stop circles
+     const renderStops = (stopCount) => {
+        const stops = [];
+        for (let i = 0; i < stopCount; i++) {
+            stops.push(<div key={i} className="stop-circle">Stop {i + 1}</div>);
+        }
+        return stops;
+    };
+
+    // Function to handle showing the clues popup
+    const handleCluesClick = () => {
+        setShowCluesPopup(true);
+    };
+
+    // Function to handle closing the clues popup
+    const handleClosePopup = () => {
+        setShowCluesPopup(false);
+    };
+
+    // Function to handle revealing the clue content
+    const handleRevealClue = (index) => {
+        if (index === 1) {
+            // Set clue 2 image path
+            setClueImage('/path/to/image.jpg');
+        }
+        setClueStatus(prevStatus => {
+            const newStatus = [...prevStatus];
+            newStatus[index] = true;
+            return newStatus;
+        });
+    };
+
+    // Function to handle revealing the location clue
+    const handleRevealLocation = () => {
+        setClueStatus(prevStatus => {
+            const newStatus = [...prevStatus];
+            newStatus[3] = true;
+            return newStatus;
+        });
+    };
+
+    // Function to render clue content
+    const renderClueContent = (clueText, index) => {
+        return (
+            <div key={index}>
+                <div>{index === 3 ? "Location" : `Clue ${index + 1}`}</div>
+                {clueStatus[index] && index !== 1 && <div>{clueText}</div>}
+                {clueStatus[index] && index === 1 && <img src={clueImage} alt="Clue 2" />}
+            </div>
+        );
+    };
+
+    // Function to render additional content based on clue reveal status
+    const renderAdditionalContent = () => {
+        return (
+            <div className="clues-list">
+                {renderClueContent("This is clue one.", 0)}
+                {renderClueContent("This is clue two.", 1)}
+                {renderClueContent("This is clue three.", 2)}
+                {renderClueContent("the location is san fran", 3)}
+            </div>
+        );
+    };
+
 
     const userIcon = isLoaded ? {
         path: window.google.maps.SymbolPath.CIRCLE,
@@ -105,13 +171,15 @@ const Tour = () => {
 
 
   return (
-    <div style={containerStyle} className="map-container">
+    <div>
+    <div style={containerStyle} className="map-container tour-container">
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={10}
         center={center}
         
       >
+        <div className="stop-circles-container" style={{position: 'relative'}}>{renderStops(4)}</div>
         <Marker position={center} />
       {userLocation && 
       <Marker
@@ -119,6 +187,25 @@ const Tour = () => {
       // Use a built-in symbol as an icon
       icon={userIcon}
   />}
+   <div className="button-container">
+                <button className="blue-button">Quit Route</button>
+                <button className="blue-button" onClick={handleCluesClick}>Clues</button>
+                <button className="grey-button" disabled>Greyed Out</button>
+            </div>
+
+            {showCluesPopup && (
+                <div className="popup">
+                    <div className="popup-header">Clues</div>
+                    {renderAdditionalContent()}
+                    <div className="popup-buttons">
+                        <button onClick={handleClosePopup}>Close</button>
+                        {clueStatus.map((status, index) => (
+                            !status && index !== 3 && <button key={index} onClick={() => handleRevealClue(index)}>Reveal Clue {index + 1}</button>
+                        ))}
+                        {!clueStatus[3] && <button onClick={handleRevealLocation}>Reveal Location</button>}
+                    </div>
+                </div>
+            )}
         {userLocation && (
                     <Circle
                         center={userLocation}
@@ -143,6 +230,7 @@ const Tour = () => {
         )}
   </GoogleMap>
       
+    </div>
     </div>
   );
 };

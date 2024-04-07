@@ -1,0 +1,84 @@
+/* tour.css */
+.stop-circles-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.stop-circle {
+    width: 80px; /* Increase circle size */
+    height: 80px; /* Increase circle size */
+    background-color: #ccc;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px; /* Increase font size */
+    font-weight: bold;
+}
+
+.stop-circle:first-child,
+.stop-circle:nth-child(2) {
+    background-color: green; /* Set first two circles to green */
+}
+/* tour.css */
+/* tour.css */
+/* tour.css */
+.tour-container {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.button-container {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.blue-button {
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.grey-button {
+    background-color: grey;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: not-allowed;
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.popup-header {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.clues-list {
+    margin-bottom: 20px;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: space-between;
+}
