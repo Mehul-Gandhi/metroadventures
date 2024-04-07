@@ -42,18 +42,28 @@ export default function Coupons () {
         setSelectedCoupon(null);
     };
 
-    return (
+    return  (
         <div>
-             <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px' }}>
-                <IconButton onClick={() => navigate('/')} style={{ marginRight: '10px' }}>
+            <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px' }}>
+                <IconButton onClick={() => navigate('/')} style={{ position: 'absolute', left: 10 }}>
                     <ArrowBackIcon />
                 </IconButton>
-                <h1 style={{ flexGrow: 1, textAlign: 'center', margin: 0 }}>Coupons</h1>
-                <div style={{ width: 48 }}></div>  {/* Placeholder for balancing the layout */}
+                <h1>Coupons</h1>
             </header>
-            <div style={{  maxHeight: '400px' }}>
+            <div style={{ maxHeight: '400px' }}>
                 {couponsData.map(coupon => (
-                    <Card key={coupon.id} onClick={() => handleCouponClick(coupon)} style={{ margin: '10px', cursor: 'pointer' }}>
+                    <Card 
+                        key={coupon.id} 
+                        onClick={() => handleCouponClick(coupon)} 
+                        style={{ 
+                            margin: '10px', 
+                            cursor: 'pointer', 
+                            boxShadow: selectedCoupon?.id === coupon.id ? '0px 0px 15px rgba(237, 231, 225, 0.5)' : '',
+                            transition: 'box-shadow 0.3s ease-in-out',
+                        }}
+                        onMouseOver={(e) => e.currentTarget.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.2)'}
+                        onMouseOut={(e) => e.currentTarget.style.boxShadow = selectedCoupon?.id === coupon.id ? '0px 0px 15px rgba(33, 150, 243, 0.5)' : ''}
+                    >
                         <CardMedia
                             component="img"
                             height="140"
@@ -77,7 +87,6 @@ export default function Coupons () {
                     <h2>{selectedCoupon.restaurant}</h2>
                     <p>Address: {selectedCoupon.address}</p>
                     <p>Menu Item: {selectedCoupon.menuItem}</p>
-                    <img src={selectedCoupon.filePath} alt={selectedCoupon.restaurant} style={{ maxWidth: '100%', maxHeight: '200px' }} />
                     <Button variant="contained" href={selectedCoupon.mapsLink} target="_blank">
                         Open in Google Maps
                     </Button>

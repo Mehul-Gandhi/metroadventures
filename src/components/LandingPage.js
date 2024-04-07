@@ -51,7 +51,7 @@ export default function LandingPage() {
       <div className="card-container">
         {routesData.map((trip) => (
           <div key={trip.id} className="card" onClick={() => handleCardClick(trip.id)}>
-            <img src={trip.image} alt={trip.name} />
+            <img src={trip.filePath} alt={trip.name} />
             <div className="card-content">
               <h2>{trip.name}</h2>
             </div>

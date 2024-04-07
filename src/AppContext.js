@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react';
+import { createSampleRoute, wanderWestPortal, richmondZigZag } from './trips';
 
 const AppContext = createContext();
 
@@ -70,7 +71,11 @@ export function AppProvider({ children }) {
           id: 4,
         },
       ];
-      const [routesData, setRoutesData] = useState(data);
+      const sampleRoute = createSampleRoute();
+      const westPortalRoute = wanderWestPortal();
+      const richmondRoute = richmondZigZag();
+
+      const [routesData, setRoutesData] = useState([sampleRoute, westPortalRoute, richmondRoute]);
 
   return (
     <AppContext.Provider value={{ routesData, setRoutesData }}>

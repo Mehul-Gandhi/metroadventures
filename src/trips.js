@@ -36,6 +36,7 @@ var Clue = /** @class */ (function () {
     };
     return Clue;
 }());
+
 exports.Clue = Clue;
 var POI = /** @class */ (function () {
     function POI(description, name, location, clues) {
@@ -73,7 +74,7 @@ var Rating = /** @class */ (function () {
 }());
 exports.Rating = Rating;
 var Route = /** @class */ (function () {
-    function Route(name, estimated_time, transportation_method, description, rating, pois, address, tags) {
+    function Route(name, estimated_time, transportation_method, description, rating, pois, address, tags, filePath, id) {
         this.name = name;
         this.estimated_time = estimated_time;
         this.transportation_method = transportation_method;
@@ -82,6 +83,8 @@ var Route = /** @class */ (function () {
         this.pois = pois;
         this.address = address;
         this.tags = tags;
+        this.filePath = filePath;
+        this.id = id;
     }
     Route.prototype.toJSON = function () {
         return JSON.stringify({
@@ -93,7 +96,9 @@ var Route = /** @class */ (function () {
             number_of_reviews: this.rating.number_of_reviews,
             pois: { createMany: this.pois.map(function (poi) { return poi.toJSON(); }) },
             address: this.address,
-            tags: this.tags
+            tags: this.tags,
+            filePath: this.filePath,
+            id: this.id
         });
     };
     return Route;
@@ -133,15 +138,24 @@ function createSampleRoute() {
     var routeRating = new Rating(4.8, 150);
     var route_description = "Come for a walk in two of San Francisco's most iconic neighborhoods: North Beach and Chinatown! Here, you'll explore some of the hidden gems of this part of town, meeting the people who have kept this city running for decades.";
     var route_starting_address = "943 Stockton St, San Francisco, CA 94108";
-    var tags = ["instagrammable", "Scenic", "Foodie"];
-    return new Route("Columbus Corridor", 1.5, "Walking", route_description, routeRating, [poi1, poi2, poi3, poi4, poi5], route_starting_address, tags);
+    var tags = [
+        { name: 'transit accessible', icon: 'subway' },
+        { name: 'Snacks', icon: 'cutlery' },
+        { name: 'Instagrammable', icon: 'instagram' },
+    ]
+    var filePath = "./ggfcf_rossalley.jpg";
+    return new Route("Columbus Corridor", 1.5, "Walking", route_description, routeRating, [poi1, poi2, poi3, poi4, poi5], route_starting_address, tags, filePath, 0);
 }
 exports.createSampleRoute = createSampleRoute;
 function wanderWestPortal() {
     var route_title = "Wandering West Portal";
     var route_description = "Come visit the southwest corner of the City by the Bay! This route will introduce you to the west side of Twin Peaks, where you can snag some lunch, find some books, and see an interesting playground.";
     var route_rate = new Rating(4.2, 304);
-    var route_tags = ["Artistic", "Beautiful", "Walkable"];
+    var route_tags =  [
+        { name: 'Scenic Views', icon: 'image' },
+        { name: 'Historic', icon: 'museum' },
+        { name: 'Outdoor', icon: 'tree' },
+      ]
     var transportation_method = "Walkable";
     var address = "170 Eucalyptus Dr San Francisco, CA 94132";
     var estimated_time = 1.0;
@@ -169,15 +183,22 @@ function wanderWestPortal() {
     ];
     var poi4 = new POI("Go take a break on a bench and watch the trains roll by. Ask someone in the area if they think the tennis court should be turned into a pickleball court or not.", "West Portal Playground.", new Coordinates(37.74139, -122.46542), clues4);
     var pois = [poi1, poi2, poi3, poi4];
-    var route = new Route(route_title, estimated_time, transportation_method, route_description, route_rate, pois, address, route_tags);
+    var filePath = "westportalpark_playground.jpg";
+    var route = new Route(route_title, estimated_time, transportation_method, route_description, route_rate, pois, address, route_tags, filePath, 1);
     return route;
 }
+
 exports.wanderWestPortal = wanderWestPortal;
 function richmondZigZag() {
     var route_title = "Richmond Zig-Zag";
     var route_description = "Visit a place that's sometimes known as San Francisco's second Chinatown. Here, you'll bounce across Inner Richmond, exploring some local business stars.";
     var route_rate = new Rating(4.95, 30400);
-    var route_tags = ["Instagrammable", "Beautiful", "Walkable"];
+    var route_tags = [
+        { name: 'Culture', icon: 'book' },
+        { name: 'Food', icon: 'utensils' },
+        { name: 'Historic', icon: 'museum' },
+    ];
+    
     var transportation_method = "Walkable";
     var address = "7 Clement St, San Francisco, CA  94118";
     var estimated_time = 2.0;
@@ -206,7 +227,8 @@ function richmondZigZag() {
     ];
     var poi4 = new POI("Enter respectfully and enjoy the beautiful art architecture.", "Star of the Sea Parish.", new Coordinates(37.78107, -122.46669), clues4);
     var pois = [poi1, poi2, poi3, poi4];
-    var route = new Route(route_title, estimated_time, transportation_method, route_description, route_rate, pois, address, route_tags);
+    var filePath = "richmond.png"
+    var route = new Route(route_title, estimated_time, transportation_method, route_description, route_rate, pois, address, route_tags, filePath, 2);
     return route;
 }
 exports.richmondZigZag = richmondZigZag;
