@@ -84,7 +84,12 @@ const Tour = () => {
      const renderStops = (stopCount) => {
         const stops = [];
         for (let i = 0; i < stopCount; i++) {
-            stops.push(<div key={i} className="stop-circle">Stop {i + 1}</div>);
+            const isActive = i <= attractionNum; // Active if this stop or previous ones
+            stops.push(
+                <div key={i} className={`stop-circle ${isActive ? 'active' : ''}`}>
+                    Stop {i + 1}
+                </div>
+            );
         }
         return stops;
     };
@@ -106,10 +111,10 @@ const Tour = () => {
 
     useEffect(() => {
         // Update the clues when the attractionNum changes
+        if (trip.pois[attractionNum]) {
         setClues(trip.pois[attractionNum].clues.map(clue => clue.text));
         setCurrentClueIndex(0);
         setRevealLocation(false);
-        console.log(clues);
 
         // const location = {
         //     lat: trip.pois[attractionNum].location.latitude,
@@ -120,7 +125,7 @@ const Tour = () => {
         //     center: location,
         //     radius: 2500,
         // });
-    }, [attractionNum, trip.pois]);
+    }}, [isLoaded, attractionNum, trip.pois]);
 
 
   useEffect(() => {
@@ -154,7 +159,7 @@ const Tour = () => {
         setMapCenter(location);
         setScavengerHuntArea({
             center: location,
-            radius: 250,
+            radius: 1000,
         });
     updateLocation();
     const locationInterval = setInterval(updateLocation, 10); 
@@ -323,7 +328,7 @@ onClick={() => setShowCluesPopup(true)}
                         }}
                         />
         )}
-        {scavengerHuntArea && (
+        {isLoaded && scavengerHuntArea && (
                     <Circle
                         center={scavengerHuntArea.center}
                         radius={scavengerHuntArea.radius}

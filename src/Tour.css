@@ -5,21 +5,21 @@
 }
 
 .stop-circle {
-    width: 80px; /* Increase circle size */
-    height: 80px; /* Increase circle size */
-    background-color: #ccc;
+    width: 80px;
+    height: 80px;
+    background-color: #ccc; /* Default color */
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 14px; /* Increase font size */
+    font-size: 14px;
     font-weight: bold;
+    transition: background-color 0.3s; /* Smooth transition for color change */
+}
+.stop-circle.active {
+    background-color: green; /* Active circle color */
 }
 
-.stop-circle:first-child,
-.stop-circle:nth-child(2) {
-    background-color: green; /* Set first two circles to green */
-}
 /* tour.css */
 /* tour.css */
 /* tour.css */
