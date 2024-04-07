@@ -4,6 +4,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import { useCoins } from './CoinContext';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import StarIcon from '@mui/icons-material/Star';
+import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
 
 import {  
     TimelineItem, 
@@ -88,7 +90,6 @@ export default function PreviousTrips() {
           miles: "0.8",
           id: 4,
           date: "July 4, 2023"
-
         },
       ];
 
@@ -113,7 +114,7 @@ export default function PreviousTrips() {
           <TimelineItem key={index}>
             <TimelineOppositeContent>
               <Typography variant="body2" color="textSecondary">
-                {trip.date} {/* Here you put the date */}
+                {trip.date}
               </Typography>
             </TimelineOppositeContent>
             <TimelineSeparator>
@@ -136,7 +137,20 @@ export default function PreviousTrips() {
                     <Typography variant="body2" color="textSecondary">
                       {trip.description}
                     </Typography>
-                    {/* Additional content like miles, time, etc. */}
+                    <Box display="flex" justifyContent="flex-start" alignItems="center">
+            <Box display="flex" alignItems="center" mr={2}>
+                <DirectionsWalkIcon />
+                <Typography variant="body2" color="textSecondary" component="span" style={{ marginLeft: '5px' }}>
+                    {trip.miles} miles
+                </Typography>
+            </Box>
+            <Box display="flex" alignItems="center">
+                <StarIcon style={{ color: 'yellow' }} />
+                <Typography variant="body2" color="textSecondary" component="span" style={{ marginLeft: '5px' }}>
+                    {trip.rating}/5 stars
+                </Typography>
+            </Box>
+        </Box>
                   </CardContent>
                 </CardActionArea>
               </Card>
