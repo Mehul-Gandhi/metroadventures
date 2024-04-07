@@ -33,7 +33,7 @@ const Tour = () => {
     let { tripId } = useParams();
     const navigate = useNavigate();
     const { routesData } = useContext(AppContext);
-    const trip = routesData[parseInt(tripId) - 1];
+    const trip = routesData[parseInt(tripId)];
     const [center, setCenter] = useState({ lat: -34.397, lng: 150.644 });
     const [userLocation, setUserLocation] = useState(null);
     const [mapCenter, setMapCenter] = useState(center);
@@ -42,7 +42,9 @@ const Tour = () => {
     const [showCluesPopup, setShowCluesPopup] = useState(false);
     const [currentClueIndex, setCurrentClueIndex] = useState(0);
     const [revealLocation, setRevealLocation] = useState(false);
+    const [attractionNum, setAttractionNum] = useState(0);
     const totalClues = 3;  // Assuming there are 3 clues
+    const totalAttractions = trip.pois.length;
 
     const clues = [
         "This is clue one.",
@@ -123,7 +125,7 @@ const Tour = () => {
             // Assuming a block is approximately 100 meters, set the radius for 0.1 blocks (10 meters)
             setScavengerHuntArea({
                 center: location,
-                radius: 100,
+                radius: 250,
             });
         } else {
             console.error('Geocode was not successful for the following reason: ' + status);
@@ -144,7 +146,7 @@ const Tour = () => {
   if (!isLoaded) {
     return <div>Loading maps</div>;
   }
-
+  console.log(trip);
 
 
   return (

@@ -139,7 +139,7 @@ function createSampleRoute() {
     var poi5 = new POI("Quietly and respectfully, enter the church to admire the beautiful stained glass and statues decorating the impressive interior.", "Saints Peter and Paul Church", new Coordinates(37.80137, -122.41020), clues5);
     var routeRating = new Rating(4.8, 150);
     var route_description = "Come for a walk in two of San Francisco's most iconic neighborhoods: North Beach and Chinatown! Here, you'll explore some of the hidden gems of this part of town, meeting the people who have kept this city running for decades.";
-    var route_starting_address = "943 Stockton St, San Francisco, CA 94108";
+    var address = "943 Stockton St, San Francisco, CA 94108";
     var tags = [
         { name: 'transit accessible', icon: 'subway' },
         { name: 'Snacks', icon: 'cutlery' },
@@ -147,7 +147,7 @@ function createSampleRoute() {
     ]
     var filePath = "./ggfcf_rossalley.jpg";
     var miles = "2"
-    return new Route("Columbus Corridor", 1.5, "Walking", route_description, routeRating, [poi1, poi2, poi3, poi4, poi5], route_starting_address, tags, filePath, 0, miles);
+    return new Route("Columbus Corridor", 1.5, "Walking", route_description, routeRating, [poi1, poi2, poi3, poi4, poi5], address, tags, filePath, 0, miles);
 }
 exports.createSampleRoute = createSampleRoute;
 function wanderWestPortal() {
