@@ -54,7 +54,7 @@ const Tour = () => {
     const handleNextClue = () => {
         if (currentClueIndex < totalClues - 1) {
             setCurrentClueIndex(currentClueIndex + 1);
-            setRevealLocation(currentClueIndex === totalClues - 1);
+            // setRevealLocation(currentClueIndex === totalClues - 1);
             console.log(revealLocation);
         }
     };
@@ -66,9 +66,9 @@ const Tour = () => {
     };
 
     const nextLocation = () => {
-        if (attractionNum < totalAttractions - 1) {
+        if (attractionNum < totalAttractions - 1 && revealLocation) {
             setAttractionNum(attractionNum + 1);
-        }
+        } 
 }
 
     const { isLoaded, loadError } = useLoadScript({
@@ -141,18 +141,6 @@ const Tour = () => {
     }
 }
     if (isLoaded) {
-   
- 
-        // var latitude = trip.pois[0].location.latitude;
-        // var longitude = trip.pois[0].location.longitude;
-        // var location = { lat: latitude, lng: longitude };
-        // // console.log(location);
-        // setMapCenter(location);
-        // // Assuming a block is approximately 100 meters, set the radius for 0.1 blocks (10 meters)
-        // setScavengerHuntArea({
-        //     center: location,
-        //     radius: 250,
-        // });
 
     updateLocation();
     const locationInterval = setInterval(updateLocation, 10); 
