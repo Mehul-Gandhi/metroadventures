@@ -19,6 +19,7 @@ import FingerprintIcon from '@mui/icons-material/Fingerprint';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import DescriptionIcon from '@mui/icons-material/Description';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import { useCoins } from './CoinContext';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -37,6 +38,8 @@ const center = {
 };
 
 const Tour = () => {
+    const { addCoins } = useCoins();
+
     let { tripId } = useParams();
     const navigate = useNavigate();
     const { routesData } = useContext(AppContext);
@@ -78,6 +81,7 @@ const Tour = () => {
         } else if (attractionNum === totalAttractions - 1 && revealLocation) {
             // Set game as completed when the last location is reached and the location is revealed
             setGameCompleted(true);
+            addCoins(10);
         }
 }
 
@@ -113,6 +117,8 @@ const Tour = () => {
     const handleQuitRoute = () => {
         navigate('/'); // Navigate to the home page
     };
+
+
 
 
     useEffect(() => {

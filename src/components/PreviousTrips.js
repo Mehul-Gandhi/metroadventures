@@ -2,6 +2,9 @@ import React from "react";
 import { Card, CardContent, Typography, IconButton, CardMedia, CardActionArea, Box } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
+import { useCoins } from './CoinContext';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+
 import {  
     TimelineItem, 
     TimelineSeparator,
@@ -14,6 +17,7 @@ import Timeline from '@mui/lab/Timeline';
 
 export default function PreviousTrips() {
     const navigate = useNavigate();
+    const { coins } = useCoins();
 
     var data = [
         {
@@ -90,6 +94,12 @@ export default function PreviousTrips() {
 
     return (
         <div style={{ margin: '20px' }}>
+            <Box display="flex" alignItems="center">
+                <MonetizationOnIcon style={{ color: '#8B8000', marginRight: '10px' }} />
+                <Typography variant="h6" gutterBottom>
+                    Total Coins Earned: {coins}
+                </Typography>
+            </Box>
             <Box display="flex" width="100%" justifyContent="flex-start">
                 <IconButton onClick={() => navigate('/')} style={{ margin: '10px' }}>
                     <ArrowBackIcon />
