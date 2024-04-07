@@ -146,7 +146,7 @@ function createSampleRoute() {
         { name: 'Instagrammable', icon: 'instagram' },
     ]
     var filePath = "./ggfcf_rossalley.jpg";
-    var miles = "2 miles"
+    var miles = "2"
     return new Route("Columbus Corridor", 1.5, "Walking", route_description, routeRating, [poi1, poi2, poi3, poi4, poi5], route_starting_address, tags, filePath, 0, miles);
 }
 exports.createSampleRoute = createSampleRoute;
@@ -187,7 +187,8 @@ function wanderWestPortal() {
     var poi4 = new POI("Go take a break on a bench and watch the trains roll by. Ask someone in the area if they think the tennis court should be turned into a pickleball court or not.", "West Portal Playground.", new Coordinates(37.74139, -122.46542), clues4);
     var pois = [poi1, poi2, poi3, poi4];
     var filePath = "westportalpark_playground.jpg";
-    var route = new Route(route_title, estimated_time, transportation_method, route_description, route_rate, pois, address, route_tags, filePath, 1);
+    var miles = "0.8"
+    var route = new Route(route_title, estimated_time, transportation_method, route_description, route_rate, pois, address, route_tags, filePath, 1, miles);
     return route;
 }
 
@@ -230,8 +231,9 @@ function richmondZigZag() {
     ];
     var poi4 = new POI("Enter respectfully and enjoy the beautiful art architecture.", "Star of the Sea Parish.", new Coordinates(37.78107, -122.46669), clues4);
     var pois = [poi1, poi2, poi3, poi4];
-    var filePath = "richmond.png"
-    var route = new Route(route_title, estimated_time, transportation_method, route_description, route_rate, pois, address, route_tags, filePath, 2);
+    var filePath = "richmond.png";
+    var miles = "1.8";
+    var route = new Route(route_title, estimated_time, transportation_method, route_description, route_rate, pois, address, route_tags, filePath, 2, miles);
     return route;
 }
 exports.richmondZigZag = richmondZigZag;
