@@ -7,6 +7,7 @@ import { AppProvider } from './AppContext';
 import './App.css';
 import Trip from './components/Trip';
 import Tour from './components/Tour';
+import About from "./components/About";
 
 export default function App() {
   return (
@@ -22,6 +23,8 @@ export default function App() {
           <Route path="/tour/:tripId" element={<Tour />} />
           <Route path="/prevTrips" element={<PreviousTrips />}/>
           <Route path="/coupons" element={<Coupons />} />
+          <Route path="/about" element={<About />} />
+
         </Routes>
       </div>
     </BrowserRouter>
